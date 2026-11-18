@@ -73,11 +73,20 @@ Issue both sub-agent calls together, in the foreground, and aggregate the report
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
-### 5. Aggregate
+### 5. Aggregate & Consensus Gate
 
 Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the two axes are deliberately separate (see _Why two axes_).
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
+#### Inter-Rater Reliability Consensus Check
+Run the native consensus gate:
+```bash
+~/Developer/af/BarrHome/capabilities/cells/cap-87-gitea-pull-request-autonomous-reviewer/bin/krippendorff
+```
+Compute Krippendorff's alpha ($\alpha = 1 - \frac{D_o}{D_e}$) across the Standards and Spec ratings:
+- **$\alpha \ge 0.80$**: High inter-rater consensus. PR is admissible for merge.
+- **$\alpha < 0.80$**: Divergent judgment across axes. Halts automatic progression and flags for human or council deliberation.
+
+End with a summary: total findings per axis, Krippendorff's alpha metric, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
 
 ## Why two axes
 

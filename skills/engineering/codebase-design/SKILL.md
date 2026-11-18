@@ -57,6 +57,15 @@ When designing an interface, ask:
 - Can I simplify the parameters?
 - Can I hide more complexity inside?
 
+### Quantitative Depth Verification (`holo depth`)
+Measure module depth using the sovereign SIMD analyzer:
+```bash
+~/Developer/af/BarrHome/capabilities/cells/holographic-arec/bin/holo-depth [path]
+```
+Evaluates the Ousterhout depth ratio $\mathcal{D}(M) = \frac{\text{BehavioralComplexity}(M)}{\text{SurfaceComplexity}(\partial M)}$ vectorized via `Math/math-zig` `Vec4f32`:
+- **$\mathcal{D}(M) \ge 2.0$**: Deep module (optimal leverage and locality).
+- **$\mathcal{D}(M) < 2.0$**: Shallow module (refactor seam, merge with callers, or hide implementation details).
+
 ## Principles
 
 - **Depth is a property of the interface, not the implementation.** A deep module can be internally composed of small, mockable, swappable parts; they just aren't part of the interface. A module can have **internal seams** (private to its implementation, used by its own tests) as well as the **external seam** at its interface.

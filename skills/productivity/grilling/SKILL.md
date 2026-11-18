@@ -7,6 +7,13 @@ Interview the user relentlessly until you reach a shared understanding. Map this
 
 Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask _now_ without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.
 
+#### Mathematical Frontier Elicitation Engine (`frontier-elicit`)
+Calculate the exact maximal antichain and rank questions by Shannon Mutual Information Gain $I(d; \Theta)$ using the sovereign engine:
+```bash
+~/Developer/af/BarrHome/capabilities/cells/decision-sciences/bin/frontier-elicit
+```
+Selects the Pareto-optimal frontier, ensuring the question with highest uncertainty reduction is asked first.
+
 Format a round like so:
 
 ```

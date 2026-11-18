@@ -79,6 +79,12 @@ Confirm:
 
 Once it's red, shrink the repro to the **smallest scenario that still goes red**. Cut inputs, callers, config, data, and steps **one at a time**, re-running the loop after each cut, and keep only what's load-bearing for the failure.
 
+#### Automated Delta Debugging (`ddmin`)
+Run the native polynomial delta debugging minimizer to isolate the 1-minimal defect subset:
+```bash
+~/Developer/af/BarrHome/capabilities/cells/srtp-diagnostic-proof/bin/ddmin
+```
+
 Why bother: a minimal repro shrinks the hypothesis space in Phase 3 (fewer moving parts left to suspect) and becomes the clean regression test in Phase 5.
 
 Done when **every remaining element is load-bearing**: removing any one of them makes the loop go green.
@@ -88,6 +94,13 @@ Do not proceed until you have reproduced **and** minimised.
 ## Phase 3: Hypothesise
 
 Generate **3–5 ranked hypotheses** before testing any of them. Single-hypothesis generation anchors on the first plausible idea.
+
+#### Statistical Fault Localization (`ochiai-localize`)
+Ground rankings using spectrum-based fault localization:
+```bash
+~/Developer/af/BarrHome/capabilities/cells/srtp-diagnostic-proof/bin/ochiai-localize
+```
+Ranks suspicious lines via $Ochiai(s) = \frac{failed(s)}{\sqrt{total\_failed \cdot (failed(s) + passed(s))}}$ accelerated via `Math/functor` AVX/NEON SIMD. Prioritize hypotheses targeting statements with score $\ge 0.85$.
 
 Each hypothesis must be **falsifiable**: state the prediction it makes.
 
